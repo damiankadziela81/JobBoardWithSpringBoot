@@ -1,5 +1,6 @@
 package com.example.jobboard.posting;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,12 +30,12 @@ class PostingController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Posting add(@RequestBody Posting posting) {
+    public Posting add(@Valid @RequestBody Posting posting) {
         return postingService.add(posting);
     }
 
     @PutMapping("/{id}")
-    public Posting update(@PathVariable Long id, @RequestBody Posting posting) {
+    public Posting update(@PathVariable Long id, @Valid @RequestBody Posting posting) {
         return postingService.update(id, posting)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
