@@ -30,7 +30,7 @@ class PostingService {
         return postingRepository.findById(id)
                 .map(posting -> {
                     newPosting.setId(posting.getId());
-                    return postingRepository.save(posting);
+                    return postingRepository.save(newPosting);
                 });
     }
 
