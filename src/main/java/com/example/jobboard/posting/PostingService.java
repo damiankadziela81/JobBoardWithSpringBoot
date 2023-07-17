@@ -15,22 +15,26 @@ class PostingService {
     }
 
     public List<Posting> getAll() {
-        return null;
+        return postingRepository.findAll();
     }
 
     public Optional<Posting> getById(Long id) {
-        return null;
+        return postingRepository.findById(id);
     }
 
     public Posting add(Posting posting) {
-        return null;
+        return postingRepository.save(posting);
     }
 
-    public Optional<Posting> update(Long id, Posting posting) {
-        return null;
+    public Optional<Posting> update(Long id, Posting newPosting) {
+        return postingRepository.findById(id)
+                .map(posting -> {
+                    newPosting.setId(posting.getId());
+                    return postingRepository.save(posting);
+                });
     }
 
     public void deleteById(Long id) {
-
+        postingRepository.deleteById(id);
     }
 }
