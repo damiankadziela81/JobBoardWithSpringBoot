@@ -1,5 +1,6 @@
 package com.example.jobboard.posting;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,11 +9,8 @@ import java.util.Optional;
 @Service
 class PostingService {
 
-    private final PostingRepository postingRepository;
-
-    PostingService(PostingRepository postingRepository) {
-        this.postingRepository = postingRepository;
-    }
+    @Autowired
+    private PostingRepository postingRepository;
 
     public List<Posting> getAll() {
         return postingRepository.findAll();

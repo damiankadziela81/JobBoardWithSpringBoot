@@ -1,6 +1,7 @@
 package com.example.jobboard.posting;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,11 +12,8 @@ import java.util.List;
 @RequestMapping("/postings")
 class PostingController {
 
-    private final PostingService postingService;
-
-    public PostingController(PostingService postingService) {
-        this.postingService = postingService;
-    }
+    @Autowired
+    private PostingService postingService;
 
     @GetMapping
     public List<Posting> getAll() {
