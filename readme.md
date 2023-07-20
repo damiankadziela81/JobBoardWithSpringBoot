@@ -6,7 +6,12 @@ Simple SpringBoot web app for testing REST API with Postman and RestAssured.
 
 ## Postman Collections
 
-TBA
+Postman Collection for testing master branch is located in:
+`.\PostmanCollections\MasterBranch\` folder.
+
+It consists of all basic CRUD operations, verifying if bad requests are properly handled and E2E scenario.
+
+Collection for feature/DB branch coming soon.
 
 ## RestAssured Project
 
@@ -18,11 +23,15 @@ Swagger available at:
 
 `localhost:8080/swagger-ui.html`
 
-## H2 Console (only on feature/DB branch)
+## Database
 
-There is H2 Database with console available at feature/DB branch, main branch has database implemented in memory as ConcurrentHashMap. 
+### Main branch
 
-Accessible via:
+Main branch has database implemented in memory as ConcurrentHashMap. It acts as in-memory database which means it's non-persistent.
+
+### Feature/DB branch (H2 Console)
+
+There is H2 Database with console available at feature/DB branch, accessible via: 
 
 `localhost:8080/h2-console`
 
@@ -35,4 +44,4 @@ spring.datasource.username=ENTER_YOUR_USERNAME
 spring.datasource.password=ENTER_YOUR_PASSWORD
 ```
 
-Database is persistent.
+Database is configured to be kept in a file which makes it persistent.
