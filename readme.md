@@ -9,9 +9,10 @@ Simple SpringBoot web app for testing REST API with Postman and RestAssured.
 Postman Collection for testing master branch is located in:
 `.\PostmanCollections\MasterBranch\` folder.
 
-It consists of all basic CRUD operations, verifying if bad requests are properly handled and E2E scenario.
+Collection for testing Feature/DB branch is located in:
+`.\PostmanCollections\FeatureDbBranch\` folder.
 
-Collection for feature/DB branch coming soon.
+Both consists of all basic CRUD operations, verifying if bad requests are properly handled and E2E scenario.
 
 ## RestAssured Project
 

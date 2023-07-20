@@ -1,0 +1,1311 @@
+{
+	"info": {
+		"_postman_id": "6e153aa4-0af1-4a50-a67f-740b1910c812",
+		"name": "JobBoardDB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23522514"
+	},
+	"item": [
+		{
+			"name": "CRUD Operations",
+			"item": [
+				{
+					"name": "Add job posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct description\", function () {\r",
+									"    pm.expect(json.description).to.eql(pm.collectionVariables.get('cRandomJobTitle'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct salary\", function () {\r",
+									"    pm.expect(json.salary).to.eql(pm.collectionVariables.get('cRandomSalary'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct company name\", function () {\r",
+									"    pm.expect(json.name).to.eql(pm.collectionVariables.get('cRandomCompanyName'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct email\", function () {\r",
+									"    pm.expect(json.contact).to.eql(pm.collectionVariables.get('cRandomEmail'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct website\", function () {\r",
+									"    pm.expect(json.website).to.eql(pm.collectionVariables.get('cRandomUrl'));\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set('jobId', json.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('cRandomEmail',pm.variables.replaceIn('{{$randomEmail}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomUrl',pm.variables.replaceIn('{{$randomUrl}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomCompanyName',pm.variables.replaceIn('{{$randomCompanyName}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomJobTitle',pm.variables.replaceIn('{{$randomJobTitle}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomSalary', _.random(1800,30000))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"{{cRandomJobTitle}}\",\r\n    \"salary\": {{cRandomSalary}},\r\n    \"expiresAt\": \"2024-08-20\",\r\n    \"name\": \"{{cRandomCompanyName}}\",\r\n    \"contact\": \"{{cRandomEmail}}\",\r\n    \"website\": \"{{cRandomUrl}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all postings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return non empty list\", function () {\r",
+									"    pm.expect(json).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return list of non empty descriptions\", () => {\r",
+									"    _.each(json,(posting) => {\r",
+									"        pm.expect(posting.description).to.not.be.empty;\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty salary\", () => {\r",
+									"    _.each(json,(posting) => {\r",
+									"        pm.expect(posting.salary).to.not.be.null;\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty expiration date\", () => {\r",
+									"    _.each(json,(posting) => {\r",
+									"        pm.expect(posting.expiresAt).to.not.be.empty;\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty name\", () => {\r",
+									"    _.each(json,(posting) => {\r",
+									"        pm.expect(posting.name).to.not.be.empty;\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty contact\", () => {\r",
+									"    _.each(json,(posting) => {\r",
+									"        pm.expect(posting.contact).to.not.be.empty;\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty website\", () => {\r",
+									"    _.each(json,(posting) => {\r",
+									"        pm.expect(posting.website).to.not.be.empty;\r",
+									"    })\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const posting = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return list of non empty descriptions\", () => {\r",
+									"    pm.expect(posting.description).to.not.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty salary\", () => {\r",
+									"        pm.expect(posting.salary).to.not.be.null;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty expiration date\", () => {\r",
+									"        pm.expect(posting.expiresAt).to.not.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty name\", () => {\r",
+									"        pm.expect(posting.name).to.not.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty contact\", () => {\r",
+									"        pm.expect(posting.contact).to.not.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return list of non empty website\", () => {\r",
+									"        pm.expect(posting.website).to.not.be.empty;\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{jobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct description\", function () {\r",
+									"    pm.expect(json.description).to.eql(\"Java dev\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct salary\", function () {\r",
+									"    pm.expect(json.salary).to.eql(12000.00);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct website\", function () {\r",
+									"    pm.expect(json.website).to.eql(\"https://valves.com\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Java dev\",\r\n    \"salary\": 12000.00,\r\n    \"expiresAt\": \"2023-09-13\",\r\n    \"name\": \"Valve\",\r\n    \"contact\": \"gaben@valve.com\",\r\n    \"website\": \"https://valves.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{jobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{jobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bad Requests",
+			"item": [
+				{
+					"name": "Add job posting without description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return bug with description\", function () {\r",
+									"    pm.expect(pm.response.text()).to.contain('description')\r",
+									"    pm.expect(pm.response.text()).to.contain('długość musi wynosić od 1 do 256');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"\",\r\n    \"salary\": 5000.00,\r\n    \"expiresAt\": \"2023-08-03\",\r\n    \"name\": \"Valve\",\r\n    \"contact\": \"gaben@valve.com\",\r\n    \"website\": \"http://valve.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add job posting with too low salary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return bug with description\", function () {\r",
+									"    pm.expect(pm.response.text()).to.contain('salary');\r",
+									"    pm.expect(pm.response.text()).to.contain('musi być równe lub większe od 1800.00');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Tester\",\r\n    \"salary\": 1000,\r\n    \"expiresAt\": \"2023-08-03\",\r\n    \"name\": \"Valve\",\r\n    \"contact\": \"gaben@valve.com\",\r\n    \"website\": \"http://valve.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add job posting with expiration date set in the past",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return bug with description\", function () {\r",
+									"    pm.expect(pm.response.text()).to.contain('expiresAt');\r",
+									"    pm.expect(pm.response.text()).to.contain('musi być datą w przyszłości');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Tester\",\r\n    \"salary\": 8000,\r\n    \"expiresAt\": \"2020-08-03\",\r\n    \"name\": \"Valve\",\r\n    \"contact\": \"gaben@valve.com\",\r\n    \"website\": \"http://valve.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add job posting without company name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return bug with description\", function () {\r",
+									"    pm.expect(pm.response.text()).to.contain('name');\r",
+									"    pm.expect(pm.response.text()).to.contain('długość musi wynosić od 1 do 256');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Tester\",\r\n    \"salary\": 8000,\r\n    \"expiresAt\": \"2023-08-03\",\r\n    \"name\": \"\",\r\n    \"contact\": \"gaben@valve.com\",\r\n    \"website\": \"http://valve.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add job posting without properly formatted email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return bug with description\", function () {\r",
+									"    pm.expect(pm.response.text()).to.contain('contact');\r",
+									"    pm.expect(pm.response.text()).to.contain('musi być poprawnie sformatowanym adresem e-mail');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Tester\",\r\n    \"salary\": 8000,\r\n    \"expiresAt\": \"2023-08-03\",\r\n    \"name\": \"Valve\",\r\n    \"contact\": \"gabenvalve.com\",\r\n    \"website\": \"http://valve.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add job posting without properly formatted url",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return bug with description\", function () {\r",
+									"    pm.expect(pm.response.text()).to.contain('website');\r",
+									"    pm.expect(pm.response.text()).to.contain('musi być poprawnym adresem URL');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Tester\",\r\n    \"salary\": 8000,\r\n    \"expiresAt\": \"2023-08-03\",\r\n    \"name\": \"Valve\",\r\n    \"contact\": \"gaben@valve.com\",\r\n    \"website\": \"valve.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "E2E",
+			"item": [
+				{
+					"name": "Get all postings before tests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//tidy check - save number of postings before tests\r",
+									"pm.collectionVariables.set('numberOfPostings', json.length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add first job posting Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct description\", function () {\r",
+									"    pm.expect(json.description).to.eql(pm.collectionVariables.get('cRandomJobTitle1'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct salary\", function () {\r",
+									"    pm.expect(json.salary).to.eql(pm.collectionVariables.get('cRandomSalary1'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct expiration date\", function () {\r",
+									"    pm.expect(json.expiresAt).to.eql('2024-08-20');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct company name\", function () {\r",
+									"    pm.expect(json.name).to.eql(pm.collectionVariables.get('cRandomCompanyName1'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct email\", function () {\r",
+									"    pm.expect(json.contact).to.eql(pm.collectionVariables.get('cRandomEmail1'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct website\", function () {\r",
+									"    pm.expect(json.website).to.eql(pm.collectionVariables.get('cRandomUrl1'));\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set('firstJobId', json.id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('cRandomEmail1',pm.variables.replaceIn('{{$randomEmail}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomUrl1',pm.variables.replaceIn('{{$randomUrl}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomCompanyName1',pm.variables.replaceIn('{{$randomCompanyName}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomJobTitle1',pm.variables.replaceIn('{{$randomJobTitle}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomSalary1', _.random(1800,30000))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"{{cRandomJobTitle1}}\",\r\n    \"salary\": {{cRandomSalary1}},\r\n    \"expiresAt\": \"2024-08-20\",\r\n    \"name\": \"{{cRandomCompanyName1}}\",\r\n    \"contact\": \"{{cRandomEmail1}}\",\r\n    \"website\": \"{{cRandomUrl1}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add second job posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct description\", function () {\r",
+									"    pm.expect(json.description).to.eql(pm.collectionVariables.get('cRandomJobTitle2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct salary\", function () {\r",
+									"    pm.expect(json.salary).to.eql(pm.collectionVariables.get('cRandomSalary2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct expiration date\", function () {\r",
+									"    pm.expect(json.expiresAt).to.eql('2024-08-20');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct company name\", function () {\r",
+									"    pm.expect(json.name).to.eql(pm.collectionVariables.get('cRandomCompanyName2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct email\", function () {\r",
+									"    pm.expect(json.contact).to.eql(pm.collectionVariables.get('cRandomEmail2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct website\", function () {\r",
+									"    pm.expect(json.website).to.eql(pm.collectionVariables.get('cRandomUrl2'));\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set('secondJobId', json.id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('cRandomEmail2',pm.variables.replaceIn('{{$randomEmail}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomUrl2',pm.variables.replaceIn('{{$randomUrl}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomCompanyName2',pm.variables.replaceIn('{{$randomCompanyName}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomJobTitle2',pm.variables.replaceIn('{{$randomJobTitle}}'));\r",
+									"\r",
+									"pm.collectionVariables.set('cRandomSalary2', _.random(1800,30000))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"{{cRandomJobTitle2}}\",\r\n    \"salary\": {{cRandomSalary2}},\r\n    \"expiresAt\": \"2024-08-20\",\r\n    \"name\": \"{{cRandomCompanyName2}}\",\r\n    \"contact\": \"{{cRandomEmail2}}\",\r\n    \"website\": \"{{cRandomUrl2}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get first posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct id\", () => {\r",
+									"    pm.expect(json.id).to.eql(pm.collectionVariables.get('firstJobId'));\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return correct description\", function () {\r",
+									"    pm.expect(json.description).to.eql(pm.collectionVariables.get('cRandomJobTitle1'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct salary\", function () {\r",
+									"    pm.expect(json.salary).to.eql(pm.collectionVariables.get('cRandomSalary1'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct expiration date\", function () {\r",
+									"    pm.expect(json.expiresAt).to.eql('2024-08-20');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct company name\", function () {\r",
+									"    pm.expect(json.name).to.eql(pm.collectionVariables.get('cRandomCompanyName1'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct email\", function () {\r",
+									"    pm.expect(json.contact).to.eql(pm.collectionVariables.get('cRandomEmail1'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct website\", function () {\r",
+									"    pm.expect(json.website).to.eql(pm.collectionVariables.get('cRandomUrl1'));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{firstJobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update second posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct description\", function () {\r",
+									"    pm.expect(json.description).to.eql(pm.collectionVariables.get('cRandomJobTitle2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct salary\", function () {\r",
+									"    pm.expect(json.salary).to.eql(10000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct expiration date\", function () {\r",
+									"    pm.expect(json.expiresAt).to.eql('2025-08-20');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct company name\", function () {\r",
+									"    pm.expect(json.name).to.eql(pm.collectionVariables.get('cRandomCompanyName2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct email\", function () {\r",
+									"    pm.expect(json.contact).to.eql(pm.collectionVariables.get('cRandomEmail2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct website\", function () {\r",
+									"    pm.expect(json.website).to.eql('http://example.com');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"{{cRandomJobTitle2}}\",\r\n    \"salary\": 10000,\r\n    \"expiresAt\": \"2025-08-20\",\r\n    \"name\": \"{{cRandomCompanyName2}}\",\r\n    \"contact\": \"{{cRandomEmail2}}\",\r\n    \"website\": \"http://example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{secondJobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete first posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{firstJobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get first non existent posting Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return timestamp in json body\"), function () {\r",
+									"    pm.expect(json.timestamp).to.not.be.empty;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Should return correct status in json body\"), function () {\r",
+									"    pm.expect(json.status).to.eql(404);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Should return correct error description in json body\"), function () {\r",
+									"    pm.expect(json.error).to.eql('Not Found');\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Should return correct path in json body\"), function () {\r",
+									"    pm.expect(json.path).to.eql(\"/posting/\" + pm.collectionVariables.get('firstJobId'));\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{firstJobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get second existing posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct id\", () => {\r",
+									"    pm.expect(json.id).to.eql(pm.collectionVariables.get('secondJobId'));\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Should return correct description\", function () {\r",
+									"    pm.expect(json.description).to.eql(pm.collectionVariables.get('cRandomJobTitle2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct salary\", function () {\r",
+									"    pm.expect(json.salary).to.eql(10000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct expiration date\", function () {\r",
+									"    pm.expect(json.expiresAt).to.eql('2025-08-20');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct company name\", function () {\r",
+									"    pm.expect(json.name).to.eql(pm.collectionVariables.get('cRandomCompanyName2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct email\", function () {\r",
+									"    pm.expect(json.contact).to.eql(pm.collectionVariables.get('cRandomEmail2'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Should return correct website\", function () {\r",
+									"    pm.expect(json.website).to.eql('http://example.com');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{secondJobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete second posting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{secondJobId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all postings after tests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//tidy check - check number of postings after tests\r",
+									"const numberOfPostingsBeforeTests = pm.collectionVariables.get('numberOfPostings'); \r",
+									"const numberOfPostingsAfterTests = json.length;\r",
+									"pm.test(\"Number of postings is OK\", function () {\r",
+									"    pm.expect(numberOfPostingsAfterTests).is.eql(numberOfPostingsBeforeTests);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/postings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"postings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "jobId",
+			"value": ""
+		},
+		{
+			"key": "cRandomEmail",
+			"value": ""
+		},
+		{
+			"key": "cRandomUrl",
+			"value": ""
+		},
+		{
+			"key": "cRandomCompanyName",
+			"value": ""
+		},
+		{
+			"key": "cRandomJobTitle",
+			"value": ""
+		},
+		{
+			"key": "cRandomSalary",
+			"value": ""
+		},
+		{
+			"key": "numberOfPostings",
+			"value": ""
+		},
+		{
+			"key": "cRandomEmail1",
+			"value": ""
+		},
+		{
+			"key": "cRandomUrl1",
+			"value": ""
+		},
+		{
+			"key": "cRandomCompanyName1",
+			"value": ""
+		},
+		{
+			"key": "cRandomJobTitle1",
+			"value": ""
+		},
+		{
+			"key": "cRandomSalary1",
+			"value": ""
+		},
+		{
+			"key": "firstJobId",
+			"value": ""
+		},
+		{
+			"key": "cRandomEmail2",
+			"value": ""
+		},
+		{
+			"key": "cRandomUrl2",
+			"value": ""
+		},
+		{
+			"key": "cRandomCompanyName2",
+			"value": ""
+		},
+		{
+			"key": "cRandomJobTitle2",
+			"value": ""
+		},
+		{
+			"key": "cRandomSalary2",
+			"value": ""
+		},
+		{
+			"key": "secondJobId",
+			"value": ""
+		}
+	]
+}
