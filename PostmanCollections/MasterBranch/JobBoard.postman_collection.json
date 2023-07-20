@@ -82,11 +82,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -155,11 +154,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -212,11 +210,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -273,11 +270,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -311,11 +307,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -370,11 +365,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -417,11 +411,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -464,11 +457,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -511,11 +503,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -558,11 +549,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -605,11 +595,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -646,11 +635,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -731,11 +719,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -816,11 +803,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -877,11 +863,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -950,11 +935,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -988,11 +972,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -1044,11 +1027,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -1112,11 +1094,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -1150,11 +1131,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings/:id",
+							"raw": "{{url}}/postings/:id",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings",
 								":id"
@@ -1198,11 +1178,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/postings",
+							"raw": "{{url}}/postings",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"postings"
 							]
@@ -1211,6 +1190,26 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
@@ -1289,6 +1288,11 @@
 		{
 			"key": "secondJobId",
 			"value": ""
+		},
+		{
+			"key": "url",
+			"value": "localhost:8080",
+			"type": "string"
 		}
 	]
 }

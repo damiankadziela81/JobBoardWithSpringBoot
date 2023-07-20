@@ -18,9 +18,9 @@ Both consists of all basic CRUD operations, verifying if bad requests are proper
 
 TBA
 
-## OpeanAPI definition
+## OpeanAPI definition (Swagger)
 
-Swagger available at:
+API documentation available at:
 
 `localhost:8080/swagger-ui.html`
 
